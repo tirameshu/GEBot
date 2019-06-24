@@ -43,20 +43,17 @@ def get_last_chat_id_and_text(updates):
 
 def handle_updates(updates):
     for update in updates["result"]:
-        try:
-            text = update["message"]["text"]
-            chat = update["message"]["chat"]["id"]
-            items = db.get_items()
-            if text in items:
-                db.delete_item(text)
-                items = db.get_items()
-            else:
-                db.add_item(text)
-                items = db.get_items()
-            message = "\n".join(items)
-            send_message(message, chat)
-        except KeyError:
-            pass
+        postal_code = update["message"]["text"]
+        chat = update["message"]["chat"]["id"]
+        info = db.get_items(postal_code)
+        if info: # assuming get_items returns a 1-d list
+            message = info
+        else:
+            message = "Sorry the postal code is not in database. I will inform my developer!"
+            # send_message(help_message, me)
+        print("information obtained: ")
+        print(info)
+        send_message(message, chat)
 
 def send_message(text, chat_id):
     text = urllib.parse.quote_plus(text)
