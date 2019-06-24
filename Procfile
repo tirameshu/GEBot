@@ -1,1 +1,1 @@
-web: python gebot.py
+app: python gebot.py
