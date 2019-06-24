@@ -1,1 +1,1 @@
-web: python gebot.py runserver 0.0.0.0:$PORT
+web: waitress-serve --port=$PORT gebot.wsgi:application
