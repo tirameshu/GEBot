@@ -1,1 +1,1 @@
-web: python gebot.py
+web: python gebot.py runserver 0.0.0.0:$PORT
