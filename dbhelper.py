@@ -51,8 +51,12 @@ class DBHelper:
         stmt = "SELECT description FROM constituencies WHERE postal_code LIKE '%'||(?)||'%'" # i think variables must be enclosed in ||
         args = (digits, )
         # execute returns a cursor, data extracted with for-loop
-        info = [x[0] for x in self.conn.execute(stmt, args)][0].strip("\n")
-        result = ""
+        
+        result = [x[0] for x in self.conn.execute(stmt, args)]
+        if not result:
+            return False
+        info = result[0].strip("\n")
+        string = ""
         backslash, space = False, False
         for c in info:
             if ord(c) == 92:
@@ -61,12 +65,12 @@ class DBHelper:
                 backslash = False
                 continue
             elif (65 <= ord(c) <= 90 or 97 <= ord(c) <= 122 or ord(c) == 44):
-                result += c
+                string += c
                 space = False
             elif ord(c) == 32 and (not space):
                 space = True
-                result += c
-        return [result.strip()]
+                string += c
+        return [string.strip()]
 
 
 #    def exists(self, postal_code):
