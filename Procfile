@@ -1,1 +1,1 @@
-app: python gebot.py
+web: gunicorn gebot.py
