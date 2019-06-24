@@ -46,8 +46,8 @@ def handle_updates(updates):
         postal_code = update["message"]["text"]
         chat = update["message"]["chat"]["id"]
         info = db.get_items(postal_code)
-        if info: # assuming get_items returns a 1-d list
-            message = info
+        if info: # get_items returns a 1-d list
+            message = info[0]
         else:
             message = "Sorry the postal code is not in database. I will inform my developer!"
             # send_message(help_message, me)
