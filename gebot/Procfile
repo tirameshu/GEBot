@@ -1,0 +1,1 @@
+web: gunicorn gebot.wsgi --log-file -
