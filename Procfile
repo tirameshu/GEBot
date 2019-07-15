@@ -1,1 +1,2 @@
-web: waitress-serve --port=$PORT gebot.wsgi:application
+web: gunicorn gettingstarted.wsgi --log-file -
+
