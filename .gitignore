@@ -1,13 +1,5 @@
-<<<<<<< HEAD
 # temp files
 *.swp
 
 # credentials
 private.py
-=======
-# Backup files #
-*.swp
-
-# virtual environment
-./env/
->>>>>>> c7e0cd96e1c1e8eddaf8117f7da23b422c133046
