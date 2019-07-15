@@ -1,8 +1,10 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from private import TOKEN
 import logging
+import os
 
-NAME = shielded-anchorage-59750
+NAME = "shielded-anchorage-59750"
+PORT = os.environ.get('PORT', '5000')
 
 updater = Updater(token=TOKEN)
 dp = updater.dispatcher
@@ -21,4 +23,12 @@ def echo(bot, update):
 echo_handler = MessageHandler(Filters.text, echo)
 dp.add_handler(echo_handler)
 
-updater.start_polling()
+# start webhooks
+updater.start_webhook(listen="0.0.0.0",
+        port=int(PORT),
+        url_path=TOKEN)
+updater.bot.setWebhook("https://{}.herokuapp.com/{}".format(NAME, TOKEN))
+updater.idle()
+
+# start locally
+# updater.start_polling()
