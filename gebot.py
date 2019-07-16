@@ -1,6 +1,8 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import logging
 import os
+import json
+import requests
 
 NAME = "gebot"
 TOKEN=os.environ['TOKEN']
@@ -27,11 +29,24 @@ def isValid(postal_code):
             return False
     return False
 
+def get_url(url):
+    response = response.get(url)
+    content = response.content.decode("utf8")
+    return content
+
+def get_json_from_url(url):
+    content = get_url(url)
+    js = json.loads(content)
+    return js
+
 def respond(bot, update):
     postal_code = update.message.text
     if (isValid(postal_code)):
         # make https req
-        msg = "Your GRC is... Your MP is..."
+        url = "https://sggrc.herokuapp.com/postcode/" + postal_code
+        js = get_json_from_url(url)
+        grc = js["grc"]
+        msg = "Your GRC is " + grc
     else:
         msg = "Invalid postal code!"
     bot.send_message(chat_id=update.message.chat_id, text=msg)
