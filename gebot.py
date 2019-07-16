@@ -28,7 +28,14 @@ def isValid(postal_code):
             return True
         except ValueError:
             return False
-    return False
+    elif len(postal_code) != 6:
+        return False
+    else:
+        try:
+            url = "https://sggrc.herokuapp.com/postcode/" + postal_code
+            requests.get(url)
+        except InvalidURL:
+            return False
 
 def get_url(url):
     response = requests.get(url)
@@ -45,7 +52,7 @@ def respond(bot, update):
     if ("win" in postal_code) or ("election" in postal_code):
         msg = "Sorry there's no public information on this. Democracy is uncertain. :/"
     elif (isValid(postal_code)):
-        # make https req
+        # all postal codes that come here must be in db
         url = "https://sggrc.herokuapp.com/postcode/" + postal_code
         js = get_json_from_url(url)
         grc = js["grc"]
@@ -53,10 +60,8 @@ def respond(bot, update):
         if (len(members) > 1):
             names = ', '.join(members)
             msg = "Your GRC is " + grc + " and your MPs are: " + names
-        elif (len(members) == 1):
+        else (len(members) == 1):
             msg = "Your SMC is " + grc + " and your MP is: " + members[0]
-        else:
-            msg = "Postal code does not exist/ not yet in database!"
     else:
         msg = "Invalid postal code!"
     bot.send_message(chat_id=update.message.chat_id, text=msg)
