@@ -27,6 +27,7 @@ def isValid(postal_code): # checks if it's a 6-digit number
     else:
         try:
             int(postal_code)
+            return True
         except ValueError:
             return False
 

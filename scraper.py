@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-def scrape(url):
+def scrape(url): # assumes grc exists and can be found on the govt site
     #Load html's plain data into a variable
     plain_html_text = requests.get(url)
     #parse the data
