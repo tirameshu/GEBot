@@ -1,4 +1,5 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from scraper.py import scraping
 import logging
 import os
 import json
@@ -46,7 +47,17 @@ def respond(bot, update):
         url = "https://sggrc.herokuapp.com/postcode/" + postal_code
         js = get_json_from_url(url)
         grc = js["grc"]
-        msg = "Your GRC is " + grc
+        grc_hyphenated = ""
+        for word in grc:
+            grc_hyphenated += word + "-"
+        grc_hyphenated = grc_hyphenated[:-1]
+        members = scraping(grc_hyphenated)
+        if (len(members) > 1):
+            msg = ("Your GRC is " + grc + " and your MPs are: "
+        else if (len(members) == 1):
+            msg += "Your SMC is " + grc + " and your MP is: "
+        else:
+            msg = "Postal code does not exist/ not yet in database!"
     else:
         msg = "Invalid postal code!"
     bot.send_message(chat_id=update.message.chat_id, text=msg)
