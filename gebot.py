@@ -27,16 +27,15 @@ def isValid(postal_code):
     elif (len(postal_code) == 6):
         try:
             int(postal_code)
+            try:
+                url = "https://sggrc.herokuapp.com/postcode/" + postal_code
+                js = get_json_from_url(url)
+                if js["grc"]:
+                    return True
+                return False
+            except InvalidURL:
+                return False
         except ValueError:
-            return False
-    else:
-        try:
-            url = "https://sggrc.herokuapp.com/postcode/" + postal_code
-            js = get_json_from_url(url)
-            if js["grc"]:
-                return True
-            return False
-        except InvalidURL:
             return False
 
 def get_url(url):
