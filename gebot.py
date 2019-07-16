@@ -47,9 +47,7 @@ def respond(bot, update):
         url = "https://sggrc.herokuapp.com/postcode/" + postal_code
         js = get_json_from_url(url)
         grc = js["grc"]
-        grc_lst = grc.split(" ")
-        grc_hyphenated = "-".join(grc_lst)
-        members = scraping(grc_hyphenated)
+        members = scraping(grc)
         if (len(members) > 1):
             names = ', '.join(members)
             msg = "Your GRC is " + grc + " and your MPs are: " + names
