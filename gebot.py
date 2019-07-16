@@ -30,7 +30,7 @@ def isValid(postal_code):
     return False
 
 def get_url(url):
-    response = response.get(url)
+    response = requests.get(url)
     content = response.content.decode("utf8")
     return content
 
