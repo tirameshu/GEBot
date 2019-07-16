@@ -8,10 +8,10 @@ def scraping(grc):
     plain_html_text = requests.get(url)
     #parse the data
     soup = BeautifulSoup(plain_html_text.text, "html.parser")
-    unlisted_list = soup.find("ul")
-    items = unlisted_list.findAll("li")
+    lst = soup.find("ul", class_="constituency-members-list")
+    items = lst.findAll("li")
     for item in items:
-        members.append(item)
-        print(item)
+        members.append(item.string)
     return members
 
+scraping("TAMPINES-GRC")
