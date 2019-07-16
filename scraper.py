@@ -9,7 +9,9 @@ def scrape(url):
     #parse the data
     soup = BeautifulSoup(plain_html_text.text, "html.parser")
     lst = soup.find("ul", class_="constituency-members-list")
-    if ((lst == None) and (!looped)):
+    if lst == None:
+        if looped:
+            return None
         looped = True
         return scrape(url + "-GRC")
     return lst
