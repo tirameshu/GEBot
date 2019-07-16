@@ -1,9 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 
-looped = False
-
 def scrape(url):
+    looped = False
     #Load html's plain data into a variable
     plain_html_text = requests.get(url)
     #parse the data
