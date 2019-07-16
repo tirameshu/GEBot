@@ -22,18 +22,20 @@ start_handler = CommandHandler('start', start)
 dp.add_handler(start_handler)
 
 def isValid(postal_code):
-    if (len(postal_code) == 6):
+    if (len(postal_code)) != 6:
+        return False
+    elif (len(postal_code) == 6):
         try:
             int(postal_code)
-            return True
         except ValueError:
             return False
-    elif len(postal_code) != 6:
-        return False
     else:
         try:
             url = "https://sggrc.herokuapp.com/postcode/" + postal_code
-            requests.get(url)
+            js = get_json_from_url(url)
+            if js["grc"]:
+                return True
+            return False
         except InvalidURL:
             return False
 
