@@ -13,5 +13,3 @@ def scraping(grc):
     for item in items:
         members.append(item.string)
     return members
-
-scraping("TAMPINES-GRC")
