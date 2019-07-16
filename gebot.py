@@ -3,9 +3,10 @@ import logging
 import os
 
 NAME = "gebot"
+TOKEN=os.environ['TOKEN']
 PORT = os.environ.get('PORT', '5000')
 
-updater = Updater(os.environ['TOKEN'])
+updater = Updater(TOKEN)
 dp = updater.dispatcher
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                      level=logging.INFO)
