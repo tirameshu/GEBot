@@ -32,7 +32,7 @@ def respond(bot, update):
         msg = "Invalid postal code!"
     bot.send_message(chat_id=update.message.chat_id, text=msg)
 
-respond_handler = MessageHandler(Filter.text, respond)
+respond_handler = MessageHandler(Filters.text, respond)
 dp.add_handler(respond_handler)
 
 def echo(bot, update):
