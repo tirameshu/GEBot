@@ -7,6 +7,8 @@ def scrape(url):
     #parse the data
     soup = BeautifulSoup(plain_html_text.text, "html.parser")
     lst = soup.find("ul", class_="constituency-members-list")
+    if lst == None:
+        return scrape(url + "-GRC")
     return lst
 
 def scraping(grc):
@@ -15,8 +17,6 @@ def scraping(grc):
     grc_edited = "-".join(grc_lst[:-1]) # account for grcs with multiple words in name 
     url = "https://www.parliament.gov.sg/mps/constituency/details/" + grc_edited
     lst = scrape(url)
-    if type(lst) == None:
-        lst = scrape(url + "-GRC")
     items = lst.findAll("li")
     for item in items:
         members.append(item.string)
