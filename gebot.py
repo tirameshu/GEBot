@@ -20,7 +20,11 @@ dp.add_handler(start_handler)
 
 def isValid(postal_code):
     if (len(postal_code) == 6):
-        return True
+        try:
+            int(postal_code)
+            return True
+        except ValueError:
+            return False
     return False
 
 def respond(bot, update):
