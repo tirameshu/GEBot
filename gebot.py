@@ -21,20 +21,12 @@ def start(bot, update):
 start_handler = CommandHandler('start', start)
 dp.add_handler(start_handler)
 
-def isValid(postal_code):
+def isValid(postal_code): # checks if it's a 6-digit number
     if (len(postal_code)) != 6:
         return False
-    elif (len(postal_code) == 6):
+    else:
         try:
             int(postal_code)
-            try:
-                url = "https://sggrc.herokuapp.com/postcode/" + postal_code
-                js = get_json_from_url(url)
-                if js["grc"]:
-                    return True
-                return False
-            except InvalidURL:
-                return False
         except ValueError:
             return False
 
@@ -53,16 +45,19 @@ def respond(bot, update):
     if ("win" in postal_code) or ("election" in postal_code):
         msg = "Sorry there's no public information on this. Democracy is uncertain. :/"
     elif (isValid(postal_code)):
-        # all postal codes that come here must be in db
+        # all postal codes are 6-d numbers, but not necessarily exist
         url = "https://sggrc.herokuapp.com/postcode/" + postal_code
         js = get_json_from_url(url)
         grc = js["grc"]
-        members = scraping(grc)
-        if (len(members) > 1):
-            names = ', '.join(members)
-            msg = "Your GRC is " + grc + " and your MPs are: " + names
+        if grc:
+            members = scraping(grc)
+            if (len(members) > 1):
+                names = ', '.join(members)
+                msg = "Your GRC is " + grc + " and your MPs are: " + names
+            else:
+                msg = "Your SMC is " + grc + " and your MP is: " + members[0]
         else:
-            msg = "Your SMC is " + grc + " and your MP is: " + members[0]
+            msg = "Postal code is not yet in database/ does not exist!"
     else:
         msg = "Invalid postal code!"
     bot.send_message(chat_id=update.message.chat_id, text=msg)
