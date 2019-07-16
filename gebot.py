@@ -62,7 +62,7 @@ def respond(bot, update):
         if (len(members) > 1):
             names = ', '.join(members)
             msg = "Your GRC is " + grc + " and your MPs are: " + names
-        else (len(members) == 1):
+        else:
             msg = "Your SMC is " + grc + " and your MP is: " + members[0]
     else:
         msg = "Invalid postal code!"
