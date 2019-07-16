@@ -43,7 +43,7 @@ def get_json_from_url(url):
 def respond(bot, update):
     postal_code = update.message.text
     if ("win" in postal_code) or ("election" in postal_code):
-        msg = "Sorry there's no public information on this. Do let me know if there is!"
+        msg = "Sorry there's no public information on this. Democracy is uncertain. :/"
     elif (isValid(postal_code)):
         # make https req
         url = "https://sggrc.herokuapp.com/postcode/" + postal_code
