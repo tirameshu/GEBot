@@ -53,9 +53,9 @@ def respond(bot, update):
         grc_hyphenated = grc_hyphenated[:-1]
         members = scraping(grc_hyphenated)
         if (len(members) > 1):
-            msg = ("Your GRC is " + grc + " and your MPs are: "
+            msg = "Your GRC is " + grc + " and your MPs are: "
         elif (len(members) == 1):
-            msg += "Your SMC is " + grc + " and your MP is: "
+            msg = "Your SMC is " + grc + " and your MP is: "
         else:
             msg = "Postal code does not exist/ not yet in database!"
     else:
