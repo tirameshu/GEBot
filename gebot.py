@@ -13,13 +13,31 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 
 def start(bot, update):
-    bot.send_message(chat_id=update.message.chat_id, text="I'm a bot, please send me a postal code!")
+    bot.send_message(chat_id=update.message.chat_id, text="I'm a bot, send me a postal code and I'll tell you about your electoral district!")
 
 start_handler = CommandHandler('start', start)
 dp.add_handler(start_handler)
 
+def isValid(postal_code):
+    if (len(postal_code) == 6):
+        return True
+    return False
+
+def respond(bot, update):
+    postal_code = update.message.text
+    if (isValid(postal_code)):
+        # make https req
+        msg = "Your GRC is... Your MP is..."
+    else:
+        msg = "Invalid postal code!"
+    bot.send_message(chat_id=update.message.chat_id, text=msg)
+
+respond_handler = MessageHandler(Filter.text, respond)
+dp.add_handler(respond_handler)
+
 def echo(bot, update):
     bot.send_message(chat_id=update.message.chat_id, text=update.message.text)
+
 echo_handler = MessageHandler(Filters.text, echo)
 dp.add_handler(echo_handler)
 
