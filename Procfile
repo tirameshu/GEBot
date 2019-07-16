@@ -1,1 +1,1 @@
-web: python3 gebot.py
+worker: python3 gebot.py
