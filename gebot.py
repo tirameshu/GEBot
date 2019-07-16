@@ -1,12 +1,11 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-from private import TOKEN
 import logging
 import os
 
 NAME = "gebot"
 PORT = os.environ.get('PORT', '5000')
 
-updater = Updater(token=TOKEN)
+updater = Updater(os.environ['TOKEN'])
 dp = updater.dispatcher
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                      level=logging.INFO)
